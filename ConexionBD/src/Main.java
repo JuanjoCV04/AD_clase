@@ -36,7 +36,7 @@ public class Main {
 
 		Departamento departamentoDelete = new Departamento("5000");
 
-		departamentoDao.insertar(departamentoNuevo);
+		//departamentoDao.insertar(departamentoNuevo);
 		//departamentoDao.actualizar(departamentoModificar);
 		//departamentoDao.delete(departamentoDelete);
 		
