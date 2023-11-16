@@ -7,7 +7,7 @@ public class Profesor {
 	private String nrp;
 	private String dni;
 	private String nombre;
-	private String apllido1;
+	private String apellido1;
 	private String apellido2;
 	private String tipo_via;
 	private String nombre_via;
@@ -31,14 +31,14 @@ public class Profesor {
 		this.nrp=nrp;
 	}
 	
-	public Profesor(String nrp, String dni, String nombre, String apllido1, String apellido2, String tipo_via,
+	public Profesor(String nrp, String dni, String nombre, String apellido1, String apellido2, String tipo_via,
 			String nombre_via, String numero, String escalera, String piso, String puerta, String cp, String pais,
 			String tlfn_fijo, String tlfn_movil, String email, Date fecha_nac, String cod_departamento) {
 		super();
 		this.nrp = nrp;
 		this.dni = dni;
 		this.nombre = nombre;
-		this.apllido1 = apllido1;
+		this.apellido1 = apellido1;
 		this.apellido2 = apellido2;
 		this.tipo_via = tipo_via;
 		this.nombre_via = nombre_via;
@@ -72,11 +72,11 @@ public class Profesor {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public String getApllido1() {
-		return apllido1;
+	public String getApellido1() {
+		return apellido1;
 	}
-	public void setApllido1(String apllido1) {
-		this.apllido1 = apllido1;
+	public void setApellido1(String apllido1) {
+		this.apellido1 = apllido1;
 	}
 	public String getApellido2() {
 		return apellido2;
@@ -164,7 +164,7 @@ public class Profesor {
 	}
 	@Override
 	public String toString() {
-		return "Profesor [nrp=" + nrp + ", dni=" + dni + ", nombre=" + nombre + ", apllido1=" + apllido1
+		return "Profesor [nrp=" + nrp + ", dni=" + dni + ", nombre=" + nombre + ", apllido1=" + apellido1
 				+ ", apellido2=" + apellido2 + ", tipo_via=" + tipo_via + ", nombre_via=" + nombre_via + ", numero="
 				+ numero + ", escalera=" + escalera + ", piso=" + piso + ", puerta=" + puerta + ", cp=" + cp + ", pais="
 				+ pais + ", tlfn_fijo=" + tlfn_fijo + ", tlfn_movil=" + tlfn_movil + ", email=" + email + ", fecha_nac="

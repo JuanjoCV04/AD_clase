@@ -45,7 +45,7 @@ public class Config {
 	
 
 
-	public static void MenuAlumno(Scanner teclado, AlumnoDAO alumnoDAO) {
+	public static void MenuAlumno(Scanner teclado, AlumnoDAO alumnoDAO, CodigoPostalDAO codigopostalDAO) {
 
 		boolean fin = true;
 
@@ -69,31 +69,36 @@ public class Config {
 				System.out.print("NRE: ");
 				String nre = teclado.next();
 				if(!Regex.ValidarNre(nre)) {
-					System.err.println("Invalido");
+					System.err.println("Invalido nre");
 					break;
+				}
+				if(Regex.ExistenciaNre(nre, alumnoDAO)) {
+					System.err.println("Invalido, nre existente");
+					break;
+				
 				}
 				System.out.print("DNI: ");
 				String dni = teclado.next();
 				if(!Regex.ValidarDNI(dni)) {
-					System.err.println("invalido");
+					System.err.println("invalido dni");
 					break;
 				}
 				System.out.print("Nombre: ");
 				String nombre = teclado.next();
 				if(!Regex.ValidarLetras(nombre)) {
-					System.err.println("invalido");
+					System.err.println("invalido nombre");
 					break;
 				}
 				System.out.print("Apellido1: ");
 				String apellido1 = teclado.next();
 				if(!Regex.ValidarLetras(apellido1)) {
-					System.err.println("invalido");
+					System.err.println("invalido apellido");
 					break;
 				}
 				System.out.print("Apellido2: ");
 				String apellido2 = teclado.next();
 				if(!Regex.ValidarLetras(apellido2)) {
-					System.err.println("invalido");
+					System.err.println("invalido apellido");
 					break;
 				}
 				System.out.print("Tipo de vía: ");
@@ -111,29 +116,39 @@ public class Config {
 				System.out.print("Código Postal: ");
 				String cp = teclado.next();
 				if(!Regex.ValidarCp(cp)) {
-					System.err.println("Invalido");
+					System.err.println("Invalido codigo postal");
 					break;
 				}
+				
+				if(!Regex.ExisteCodigoPostal(cp, codigopostalDAO)) {
+					System.err.println("Invalido, codigo postal no existente");
+					break;
+				}
+				
 				System.out.print("País: ");
 				String pais = teclado.next();
 				System.out.print("Teléfono fijo: ");
 				String tlfn_fijo = teclado.next();
 				if(!Regex.ValidarTelefono(tlfn_fijo)) {
-					System.err.println("Invalido");
+					System.err.println("Invalido telefono fijo");
 					break;
 				}
 				System.out.print("Teléfono móvil: ");
 				String tlfn_movil = teclado.next();
 				if(!Regex.ValidarTelefono(tlfn_movil)) {
-					System.err.println("Invalido");
+					System.err.println("Invalido telefono movil");
 					break;
 				}
 				System.out.print("Correo electrónico: ");
 				String email = teclado.next();
+				if(!Regex.ValidarGmail(email)) {
+					System.err.println("Invalido Gmail");
+					break;
+				}
 				System.out.print("Fecha de nacimiento (YYYY-MM-DD): ");
 				String fechaNacimientoStr = teclado.next();
 				if(!Regex.ValidarFecha(fechaNacimientoStr)) {
-					System.err.println("Invalido");
+					System.err.println("Invalida fecha");
 					break;
 				}
 				Date fechaNac = Date.valueOf(fechaNacimientoStr);
@@ -153,11 +168,11 @@ public class Config {
 				String nuevoNre = teclado.next();
 				
 				if(!Regex.ValidarNre(nuevoNre)) {
-					System.err.println("Invalido");
+					System.err.println("Invalido nre");
 					break;
 				}
 				if(!Regex.ExistenciaNre(nuevoNre, alumnoDAO)) {
-					System.err.println("Invalido");
+					System.err.println("Invalido, nre no existe");
 					break;
 				
 				}
@@ -166,25 +181,25 @@ public class Config {
 				System.out.print("Nuevo DNI: ");
 				String nuevoDni = teclado.next();
 				if(!Regex.ValidarDNI(nuevoDni)) {
-					System.err.println("invalido");
+					System.err.println("invalido dni");
 					break;
 				}
 				System.out.print("Nuevo nombre: ");
 				String nuevoNombre = teclado.next();
 				if(!Regex.ValidarLetras(nuevoNombre)) {
-					System.err.println("invalido");
+					System.err.println("invalido nombre");
 					break;
 				}
 				System.out.print("Nuevo apellido1: ");
 				String nuevoApellido1 = teclado.next();
 				if(!Regex.ValidarLetras(nuevoApellido1)) {
-					System.err.println("invalido");
+					System.err.println("invalido apellido");
 					break;
 				}
 				System.out.print("Nuevo apellido2: ");
 				String nuevoApellido2 = teclado.next();
 				if(!Regex.ValidarLetras(nuevoApellido2)) {
-					System.err.println("invalido");
+					System.err.println("invalido apellido");
 					break;
 				}
 				System.out.print("Nuevo tipo de vía: ");
@@ -202,7 +217,12 @@ public class Config {
 				System.out.print("Nuevo código postal: ");
 				String nuevoCp = teclado.next();
 				if(!Regex.ValidarCp(nuevoCp)) {
-					System.err.println("Invalido");
+					System.err.println("Invalido codigo postal");
+					break;
+				}
+				
+				if(!Regex.ExisteCodigoPostal(nuevoCp, codigopostalDAO)) {
+					System.err.println("Invalido, codigo postal no registrado");
 					break;
 				}
 				System.out.print("Nuevo país: ");
@@ -210,21 +230,25 @@ public class Config {
 				System.out.print("Nuevo teléfono fijo: ");
 				String nuevoTlfnFijo = teclado.next();
 				if(!Regex.ValidarTelefono(nuevoTlfnFijo)) {
-					System.err.println("Invalido");
+					System.err.println("Invalido telefono fijo");
 					break;
 				}
 				System.out.print("Nuevo teléfono móvil: ");
 				String nuevoTlfnMovil = teclado.next();
 				if(!Regex.ValidarTelefono(nuevoTlfnMovil)) {
-					System.err.println("Invalido");
+					System.err.println("Invalido telefono movil");
 					break;
 				}
 				System.out.print("Nuevo correo electrónico: ");
 				String nuevoEmail = teclado.next();
+				if(!Regex.ValidarGmail(nuevoEmail)) {
+					System.err.println("Invalido Gmail");
+					break;
+				}
 				System.out.print("Nueva fecha de nacimiento (YYYY-MM-DD): ");
 				String nuevaFechaNacimientoStr = teclado.next();
 				if(!Regex.ValidarFecha(nuevaFechaNacimientoStr)) {
-					System.err.println("Invalido");
+					System.err.println("Invalida fecha");
 					break;
 				}
 				Date nuevaFechaNac = Date.valueOf(nuevaFechaNacimientoStr);
@@ -244,7 +268,11 @@ public class Config {
 				teclado.nextLine();
 				System.out.print("Ingrese el NRE del alumno a eliminar: ");
 				String idEliminar = teclado.nextLine();
-
+				if(!Regex.ExistenciaNre(idEliminar, alumnoDAO)) {
+					System.err.println("Invalido, nre no existe");
+					break;
+				
+				}
 				Alumno alumnoDelete = new Alumno(idEliminar);
 				alumnoDAO.delete(alumnoDelete);
 
@@ -285,6 +313,16 @@ public class Config {
 				// Añadir Departamento
 				System.out.print("Ingrese el código del departamento: ");
 				String nuevoCodigo = teclado.next();
+				
+				if(!Regex.ValidarCodDepartamento(nuevoCodigo)) {
+					System.err.println("Invalido formato Codigo departamento");
+					break;
+				}
+				
+				if(Regex.ExistenciaDepartamento(nuevoCodigo, departamentoDAO)) {
+					System.err.println("Invalido, cod departamento existente");
+					break;
+				}
 				System.out.print("Ingrese el nombre del departamento: ");
 				String nuevoNombre = teclado.next();
 				System.out.print("Ingrese la descripción del departamento: ");
@@ -299,6 +337,15 @@ public class Config {
 				// Modificar Departamento
 				System.out.print("Ingrese el código del departamento: ");
 				nuevoCodigo = teclado.next();
+				if(!Regex.ValidarCodDepartamento(nuevoCodigo)) {
+					System.err.println("Invalido formato Codigo departamento");
+					break;
+				}
+				
+				if(!Regex.ExistenciaDepartamento(nuevoCodigo, departamentoDAO)) {
+					System.err.println("Invalido, cod departamento no existe");
+					break;
+				}
 				System.out.print("Ingrese el nombre del departamento: ");
 				nuevoNombre = teclado.next();
 				System.out.print("Ingrese la descripción del departamento: ");
@@ -313,7 +360,10 @@ public class Config {
 				teclado.nextLine();
 				System.out.print("Ingrese el ID del departamento a eliminar: ");
 				String idEliminar = teclado.nextLine();
-
+				if(!Regex.ExistenciaDepartamento(idEliminar, departamentoDAO)) {
+					System.err.println("Invalido, cod departamento no existe");
+					break;
+				}
 				Departamento departamentoDelete = new Departamento(idEliminar);
 				departamentoDAO.eliminar(departamentoDelete);
 
@@ -330,7 +380,7 @@ public class Config {
 		}
 	}
 
-	public static void MenuProfesor(Scanner teclado, ProfesorDAO profesorDAO) {
+	public static void MenuProfesor(Scanner teclado, ProfesorDAO profesorDAO, CodigoPostalDAO codigopostalDAO, DepartamentoDAO departamentoDAO) {
 
 		boolean fin = true;
 
@@ -351,14 +401,42 @@ public class Config {
 				// Añadir Profesor
 				System.out.print("Ingrese el NRP del profesor: ");
 				String nuevoNrp = teclado.next();
+				
+				if(!Regex.ValidarNre(nuevoNrp)) {
+					System.err.println("NRP formato invalido");
+					break;
+				}
+				
+				if(Regex.ExistenciaNrp(nuevoNrp, profesorDAO)) {
+					System.err.println("Invalido, nrp existente");
+					break;
+				}
+				
+				
 				System.out.print("Ingrese el DNI del profesor: ");
 				String nuevoDni = teclado.next();
+				if(!Regex.ValidarDNI(nuevoDni)) {
+					System.err.println("invalido dni");
+					break;
+				}
 				System.out.print("Ingrese el nombre del profesor: ");
 				String nuevoNombre = teclado.next();
+				if(!Regex.ValidarLetras(nuevoNombre)) {
+					System.err.println("invalido nombre");
+					break;
+				}
 				System.out.print("Ingrese el primer apellido del profesor: ");
 				String nuevoApellido1 = teclado.next();
+				if(!Regex.ValidarLetras(nuevoApellido1)) {
+					System.err.println("invalido apellido");
+					break;
+				}
 				System.out.print("Ingrese el segundo apellido del profesor: ");
 				String nuevoApellido2 = teclado.next();
+				if(!Regex.ValidarLetras(nuevoApellido2)) {
+					System.err.println("invalido apellido");
+					break;
+				}
 				System.out.print("Ingrese el tipo de vía: ");
 				String nuevoTipoVia = teclado.next();
 				System.out.print("Ingrese el nombre de la vía: ");
@@ -373,20 +451,54 @@ public class Config {
 				String nuevaPuerta = teclado.next();
 				System.out.print("Ingrese el código postal: ");
 				String nuevoCp = teclado.next();
+				if(!Regex.ValidarCp(nuevoCp)) {
+					System.err.println("Invalido codigo postal");
+					break;
+				}
+				
+				if(!Regex.ExisteCodigoPostal(nuevoCp, codigopostalDAO)) {
+					System.err.println("Invalido, codigo postal no existente");
+					break;
+				}
+				
 				System.out.print("Ingrese el país: ");
 				String nuevoPais = teclado.next();
 				System.out.print("Ingrese el teléfono fijo: ");
 				String nuevoTlfnFijo = teclado.next();
+				if(!Regex.ValidarTelefono(nuevoTlfnFijo)) {
+					System.err.println("Invalido telefono fijo");
+					break;
+				}
 				System.out.print("Ingrese el teléfono móvil: ");
 				String nuevoTlfnMovil = teclado.next();
+				if(!Regex.ValidarTelefono(nuevoTlfnMovil)) {
+					System.err.println("Invalido telefono movil");
+					break;
+				}
 				System.out.print("Ingrese el email: ");
 				String nuevoEmail = teclado.next();
+				if(!Regex.ValidarGmail(nuevoEmail)) {
+					System.err.println("Invalido Gmail");
+					break;
+				}
 				System.out.print("Ingrese la fecha de nacimiento (YYYY-MM-DD): ");
 				String nuevaFechaNacString = teclado.next();
+				if(!Regex.ValidarFecha(nuevaFechaNacString)) {
+					System.err.println("Invalida fecha");
+					break;
+				}
 				Date nuevaFechaNac = Date.valueOf(nuevaFechaNacString);
 				System.out.print("Ingrese el código del departamento: ");
 				String nuevoCodDepartamento = teclado.next();
-
+				if(!Regex.ValidarCodDepartamento(nuevoCodDepartamento)) {
+					System.err.println("Invalido formato Codigo departamento");
+					break;
+				}
+				
+				if(!Regex.ExistenciaDepartamento(nuevoCodDepartamento, departamentoDAO)) {
+					System.err.println("Invalido, cod departamento no existe");
+					break;
+				}
 				Profesor nuevoProfesor = new Profesor(nuevoNrp, nuevoDni, nuevoNombre, nuevoApellido1, nuevoApellido2,
 						nuevoTipoVia, nuevoNombreVia, nuevoNumero, nuevaEscalera, nuevoPiso, nuevaPuerta, nuevoCp,
 						nuevoPais, nuevoTlfnFijo, nuevoTlfnMovil, nuevoEmail, nuevaFechaNac, nuevoCodDepartamento);
@@ -394,17 +506,43 @@ public class Config {
 				System.out.println("Profesor añadido correctamente.");
 
 				break;
+				
 			case 3:
 				System.out.print("Ingrese el NRP del profesor: ");
 				nuevoNrp = teclado.next();
+				if(!Regex.ValidarNre(nuevoNrp)) {
+					System.err.println("NRP formato invalido");
+					break;
+				}
+				
+				if(!Regex.ExistenciaNrp(nuevoNrp, profesorDAO)) {
+					System.err.println("Invalido, nrp existente");
+					break;
+				}
 				System.out.print("Ingrese el DNI del profesor: ");
 				nuevoDni = teclado.next();
+				if(!Regex.ValidarDNI(nuevoDni)) {
+					System.err.println("invalido dni");
+					break;
+				}
 				System.out.print("Ingrese el nombre del profesor: ");
 				nuevoNombre = teclado.next();
+				if(!Regex.ValidarLetras(nuevoNombre)) {
+					System.err.println("invalido nombre");
+					break;
+				}
 				System.out.print("Ingrese el primer apellido del profesor: ");
 				nuevoApellido1 = teclado.next();
+				if(!Regex.ValidarLetras(nuevoApellido1)) {
+					System.err.println("invalido apellido");
+					break;
+				}
 				System.out.print("Ingrese el segundo apellido del profesor: ");
 				nuevoApellido2 = teclado.next();
+				if(!Regex.ValidarLetras(nuevoApellido2)) {
+					System.err.println("invalido apellido");
+					break;
+				}
 				System.out.print("Ingrese el tipo de vía: ");
 				nuevoTipoVia = teclado.next();
 				System.out.print("Ingrese el nombre de la vía: ");
@@ -419,20 +557,53 @@ public class Config {
 				nuevaPuerta = teclado.next();
 				System.out.print("Ingrese el código postal: ");
 				nuevoCp = teclado.next();
+				if(!Regex.ValidarCp(nuevoCp)) {
+					System.err.println("Invalido codigo postal");
+					break;
+				}
+				
+				if(!Regex.ExisteCodigoPostal(nuevoCp, codigopostalDAO)) {
+					System.err.println("Invalido, codigo postal no existente");
+					break;
+				}
 				System.out.print("Ingrese el país: ");
 				nuevoPais = teclado.next();
 				System.out.print("Ingrese el teléfono fijo: ");
 				nuevoTlfnFijo = teclado.next();
+				if(!Regex.ValidarTelefono(nuevoTlfnFijo)) {
+					System.err.println("Invalido telefono fijo");
+					break;
+				}
 				System.out.print("Ingrese el teléfono móvil: ");
 				nuevoTlfnMovil = teclado.next();
+				if(!Regex.ValidarTelefono(nuevoTlfnMovil)) {
+					System.err.println("Invalido telefono movil");
+					break;
+				}
 				System.out.print("Ingrese el email: ");
 				nuevoEmail = teclado.next();
+				if(!Regex.ValidarGmail(nuevoEmail)) {
+					System.err.println("Invalido Gmail");
+					break;
+				}
 				System.out.print("Ingrese la fecha de nacimiento (YYYY-MM-DD): ");
 				nuevaFechaNacString = teclado.next();
+				if(!Regex.ValidarFecha(nuevaFechaNacString)) {
+					System.err.println("Invalida fecha");
+					break;
+				}
 				nuevaFechaNac = Date.valueOf(nuevaFechaNacString);
 				System.out.print("Ingrese el código del departamento: ");
 				nuevoCodDepartamento = teclado.next();
-
+				if(!Regex.ValidarCodDepartamento(nuevoCodDepartamento)) {
+					System.err.println("Invalido formato Codigo departamento");
+					break;
+				}
+				
+				if(!Regex.ExistenciaDepartamento(nuevoCodDepartamento, departamentoDAO)) {
+					System.err.println("Invalido, cod departamento no existe");
+					break;
+				}
 				Profesor profesorModificado = new Profesor(nuevoNrp, nuevoDni, nuevoNombre, nuevoApellido1,
 						nuevoApellido2, nuevoTipoVia, nuevoNombreVia, nuevoNumero, nuevaEscalera, nuevoPiso,
 						nuevaPuerta, nuevoCp, nuevoPais, nuevoTlfnFijo, nuevoTlfnMovil, nuevoEmail, nuevaFechaNac,
@@ -444,7 +615,10 @@ public class Config {
 				teclado.nextLine();
 				System.out.print("Ingrese el NRP del Profesor a eliminar: ");
 				String idEliminar = teclado.nextLine();
-
+				if(!Regex.ValidarNre(idEliminar)) {
+					System.err.println("NRP formato invalido");
+					break;
+				}
 				Profesor profesorDelte = new Profesor(idEliminar);
 				profesorDAO.eliminar(profesorDelte);
 
@@ -483,6 +657,16 @@ public class Config {
 			case 2:
 				System.out.print("Ingrese el código del Edificio: ");
 				String nuevoCodigo = teclado.next();
+				if(!Regex.ValidarSoloNumeros(nuevoCodigo)) {
+					System.err.println("Codigo formato invalido");
+					break;
+				}
+				
+				if(Regex.ExistenciaEdificio(nuevoCodigo, edificioDAO)) {
+					System.err.println("Invalido, codigo ya existente");
+					break;
+				}
+				
 				System.out.print("Ingrese el nombre del Edificio: ");
 				String nuevoNombre = teclado.next();
 
@@ -493,6 +677,15 @@ public class Config {
 			case 3:
 				System.out.print("Ingrese el código del Edificio: ");
 				nuevoCodigo = teclado.next();
+				if(!Regex.ValidarSoloNumeros(nuevoCodigo)) {
+					System.err.println("Codigo formato invalido");
+					break;
+				}
+				
+				if(!Regex.ExistenciaEdificio(nuevoCodigo, edificioDAO)) {
+					System.err.println("Invalido, codigo no existente");
+					break;
+				}
 				System.out.print("Ingrese el nombre del Edificio: ");
 				nuevoNombre = teclado.next();
 
@@ -504,7 +697,10 @@ public class Config {
 				teclado.nextLine();
 				System.out.print("Ingrese el ID del Edificio a eliminar: ");
 				String idEliminar = teclado.nextLine();
-
+				if(!Regex.ExistenciaEdificio(idEliminar, edificioDAO)) {
+					System.err.println("Invalido, id no existente");
+					break;
+				}
 				Edificio edificioEliminado = new Edificio(idEliminar);
 				edificioDAO.eliminar(edificioEliminado);
 
@@ -522,7 +718,7 @@ public class Config {
 		}
 	}
 
-	public static void MenuAula(Scanner teclado, AulaDAO aulaDAO) {
+	public static void MenuAula(Scanner teclado, AulaDAO aulaDAO,EdificioDAO edificioDAO) {
 
 		boolean fin = true;
 
@@ -543,9 +739,27 @@ public class Config {
 			case 2:
 				System.out.print("Ingrese el código del Aula: ");
 				String nuevoCodigo = teclado.next();
+				if(!Regex.ValidarSoloNumeros(nuevoCodigo)) {
+					System.err.println("Codigo formato invalido");
+					break;
+				}
+				
+				if(Regex.ExistenciaAula(nuevoCodigo, aulaDAO)) {
+					System.err.println("Codigo ya existe, invalido");
+					break;
+				}
 				System.out.print("Ingrese el codigo del Edificio: ");
 				String nuevoCodigoedf = teclado.next();
-
+				if(!Regex.ValidarSoloNumeros(nuevoCodigoedf)) {
+					System.err.println("Codigo formato invalido");
+					break;
+				}
+				
+				if(Regex.ExistenciaEdificio(nuevoCodigoedf, edificioDAO)) {
+					System.err.println("Invalido, codigo ya existente");
+					break;
+				}
+				
 				Aula nuevoAula = new Aula(nuevoCodigo, nuevoCodigoedf);
 				aulaDAO.insertar(nuevoAula);
 				System.out.println("Aula añadido correctamente.");
@@ -553,8 +767,25 @@ public class Config {
 			case 3:
 				System.out.print("Ingrese el código del Aula: ");
 				nuevoCodigo = teclado.next();
+				if(!Regex.ValidarSoloNumeros(nuevoCodigo)) {
+					System.err.println("Codigo formato invalido");
+					break;
+				}
+				if(!Regex.ExistenciaAula(nuevoCodigo, aulaDAO)) {
+					System.err.println("Codigo no existe, invalido");
+					break;
+				}
 				System.out.print("Ingrese el codigo del Edificio: ");
 				nuevoCodigoedf = teclado.next();
+				if(!Regex.ValidarSoloNumeros(nuevoCodigoedf)) {
+					System.err.println("Codigo formato invalido");
+					break;
+				}
+				
+				if(!Regex.ExistenciaEdificio(nuevoCodigoedf, edificioDAO)) {
+					System.err.println("Invalido, codigo ya existente");
+					break;
+				}
 
 				Aula aulaModificar = new Aula(nuevoCodigo, nuevoCodigoedf);
 				aulaDAO.actualizar(aulaModificar);
@@ -564,7 +795,10 @@ public class Config {
 				teclado.nextLine();
 				System.out.print("Ingrese el ID del Aula a eliminar: ");
 				String idEliminar = teclado.nextLine();
-
+				if(!Regex.ExistenciaAula(idEliminar, aulaDAO)) {
+					System.err.println("Codigo no existe, invalido");
+					break;
+				}
 				Aula aulaEliminar = new Aula(idEliminar);
 				aulaDAO.eliminar(aulaEliminar);
 
@@ -600,6 +834,15 @@ public class Config {
 			case 2:
 				System.out.print("Ingrese el código del Curso: ");
 				String nuevoCodigo = teclado.next();
+				if(!Regex.ValidarSoloNumeros(nuevoCodigo)) {
+					System.err.println("Codigo formato invalido");
+					break;
+				}
+				
+				if(Regex.ExistenciaCurso(nuevoCodigo, cursoDAO)) {
+					System.err.println("Codigo ya existe, invalido");
+					break;
+				}
 				System.out.print("Ingrese el Nombre del Curso: ");
 				String nuevoNombre = teclado.next();
 				System.out.print("Ingrese la Descripcion del curso: ");
@@ -612,6 +855,14 @@ public class Config {
 			case 3:
 				System.out.print("Ingrese el código del Curso: ");
 				nuevoCodigo = teclado.next();
+				if(!Regex.ValidarSoloNumeros(nuevoCodigo)) {
+					System.err.println("Codigo formato invalido");
+					break;
+				}
+				if(!Regex.ExistenciaCurso(nuevoCodigo, cursoDAO)) {
+					System.err.println("Codigo no existe, invalido");
+					break;
+				}
 				System.out.print("Ingrese el Nombre del Curso: ");
 				nuevoNombre = teclado.next();
 				System.out.print("Ingrese la Descripcion del curso: ");
@@ -625,7 +876,12 @@ public class Config {
 				teclado.nextLine();
 				System.out.print("Ingrese el ID del Curso a eliminar: ");
 				String idEliminar = teclado.nextLine();
-
+				
+				if(!Regex.ExistenciaCurso(idEliminar, cursoDAO)) {
+					System.err.println("Codigo no existe, invalido");
+					break;
+				}
+				
 				Curso cursoDelete = new Curso(idEliminar);
 				cursoDAO.eliminar(cursoDelete);
 
@@ -661,6 +917,7 @@ public class Config {
 			case 2:
 				System.out.print("Ingrese el código del Turno: ");
 				String nuevoCodigo = teclado.next();
+				
 				System.out.print("Ingrese el Horario del turno: ");
 				String nuevohorario = teclado.next();
 
@@ -699,7 +956,7 @@ public class Config {
 	}
 
 	public static void MenuGrupo(Scanner teclado, GrupoDAO grupoDAO) {
-
+		
 		boolean fin = true;
 
 		while (fin) {

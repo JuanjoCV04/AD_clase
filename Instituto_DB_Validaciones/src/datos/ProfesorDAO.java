@@ -12,11 +12,11 @@ import domain.Profesor;
 
 public class ProfesorDAO {
 
-    private static final String SQL_SELECT = "SELECT nrp, dni, nombre, apllido1, apellido2, tipo_via, nombre_via, numero, escalera, piso, puerta, cp, pais, tlfn_fijo, tlfn_movil, email, fecha_nac, cod_departamento FROM profesor";
+    private static final String SQL_SELECT = "SELECT nrp, dni, nombre, apellido1, apellido2, tipo_via, nombre_via, numero, escalera, piso, puerta, cp, pais, tlfn_fijo, tlfn_movil, email, fecha_nac, cod_departamento FROM profesor";
 
-    private static final String SQL_INSERT = "INSERT INTO profesor(nrp, dni, nombre, apllido1, apellido2, tipo_via, nombre_via, numero, escalera, piso, puerta, cp, pais, tlfn_fijo, tlfn_movil, email, fecha_nac, cod_departamento) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String SQL_INSERT = "INSERT INTO profesor(nrp, dni, nombre, apellido1, apellido2, tipo_via, nombre_via, numero, escalera, piso, puerta, cp, pais, tlfn_fijo, tlfn_movil, email, fecha_nac, cod_departamento) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-    private static final String SQL_UPDATE = "UPDATE profesor SET dni=?, nombre=?, apllido1=?, apellido2=?, tipo_via=?, nombre_via=?, numero=?, escalera=?, piso=?, puerta=?, cp=?, pais=?, tlfn_fijo=?, tlfn_movil=?, email=?, fecha_nac=?, cod_departamento=? WHERE nrp=?";
+    private static final String SQL_UPDATE = "UPDATE profesor SET dni=?, nombre=?, apellido1=?, apellido2=?, tipo_via=?, nombre_via=?, numero=?, escalera=?, piso=?, puerta=?, cp=?, pais=?, tlfn_fijo=?, tlfn_movil=?, email=?, fecha_nac=?, cod_departamento=? WHERE nrp=?";
 
     private static final String SQL_DELETE = "DELETE FROM profesor WHERE nrp=?";
 
@@ -37,7 +37,7 @@ public class ProfesorDAO {
             	String nrp = rs.getString("nrp");
             	String dni = rs.getString("dni");
             	String nombre = rs.getString("nombre");
-            	String apllido1 = rs.getString("apllido1");
+            	String apellido1 = rs.getString("apellido1");
             	String apellido2 = rs.getString("apellido2");
             	String tipo_via = rs.getString("tipo_via");
             	String nombre_via = rs.getString("nombre_via");
@@ -53,7 +53,7 @@ public class ProfesorDAO {
             	Date fecha_nac = rs.getDate("fecha_nac");
             	String cod_departamento = rs.getString("cod_departamento");
 
-            	profesor = new Profesor(nrp, dni, nombre, apllido1, apellido2, tipo_via, nombre_via, numero, escalera, piso,
+            	profesor = new Profesor(nrp, dni, nombre, apellido1, apellido2, tipo_via, nombre_via, numero, escalera, piso,
             	    puerta, cp, pais, tlfn_fijo, tlfn_movil, email, fecha_nac, cod_departamento);
             	profesores.add(profesor);
 
@@ -84,7 +84,7 @@ public class ProfesorDAO {
             stmt.setString(1, profesor.getNrp());
             stmt.setString(2, profesor.getDni());
             stmt.setString(3, profesor.getNombre());
-            stmt.setString(4, profesor.getApllido1());
+            stmt.setString(4, profesor.getApellido1());
             stmt.setString(5, profesor.getApellido2());
             // Resto de los campos...
 
@@ -116,7 +116,7 @@ public class ProfesorDAO {
 
             stmt.setString(1, profesor.getDni());
             stmt.setString(2, profesor.getNombre());
-            stmt.setString(3, profesor.getApllido1());
+            stmt.setString(3, profesor.getApellido1());
             stmt.setString(4, profesor.getApellido2());
             // Resto de los campos...
             stmt.setString(18, profesor.getNrp());

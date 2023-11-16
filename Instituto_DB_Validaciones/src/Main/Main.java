@@ -18,7 +18,7 @@ public class Main {
 		GrupoDAO grupoDAO = new GrupoDAO();
 		ProfesorDAO profesorDAO = new ProfesorDAO();
 		TurnoDAO turnoDAO = new TurnoDAO();
-
+		CodigoPostalDAO codigopostalDAO = new CodigoPostalDAO();
 		boolean fin = true;
 
 		while (fin) {
@@ -32,14 +32,14 @@ public class Main {
 				fin = false;
 				break;
 			case 1:
-				Config.MenuAlumno(teclado, alumnoDAO);
+				Config.MenuAlumno(teclado, alumnoDAO, codigopostalDAO);
 				break;
 			case 2:
 				Config.MenuDepartamento(teclado, departamentoDAO);
 				break;
 
 			case 3:
-				Config.MenuProfesor(teclado, profesorDAO);
+				Config.MenuProfesor(teclado, profesorDAO, codigopostalDAO, departamentoDAO);
 				break;
 
 			case 4:
@@ -47,7 +47,7 @@ public class Main {
 				break;
 
 			case 5:
-				Config.MenuAula(teclado, aulaDAO);
+				Config.MenuAula(teclado, aulaDAO, edificioDAO);
 				break;
 
 			case 6:
